@@ -4,5 +4,6 @@
     {
         Console.WriteLine("Hello, World!");
         Console.WriteLine("nanana");
+        Console.WriteLine("iku");
     }
 }
