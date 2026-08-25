@@ -2,17 +2,16 @@
 {
     static void ex01()
     {
-        Console.WriteLine("nhap do c");
-        float ce = float.Parse(Console.ReadLine());
-        float ke = ce + 273;
-        float fa = ce * 18 / 10 + 32;
-        Console.WriteLine($"{ce} c = {ke} k = {fa} f"); 
+        Console.WriteLine("nhap chi so dien cu");
+        float cu = float.Parse(Console.ReadLine());
+        Console.WriteLine("nhap chi so dien moi");
+        float moi = float.Parse(Console.ReadLine());
+        Console.WriteLine("luong dien tieu thu trong thang");
+        float fa = cu * 18 / 10 + 32;
+        Console.WriteLine($"{cu} c = {ke} k = {fa} f"); 
     }
     static void ex02()
     {
-        Console.WriteLine("nhap ban kinh:");
-        float r = float.Parse(Console.ReadLine());
-        float 
     }
     static void Main()
     {
