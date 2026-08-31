@@ -256,7 +256,10 @@ class EX01()
 
     static void Main()
     {
-        
+        ex01();
+        ex02();
+        ex03();
+        ex04();
         ex05();
     }
 }
