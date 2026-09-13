@@ -1,267 +1,348 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Linq.Expressions;
-
-class EX01()
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+enum CurrencyType
 {
-    static void ex01()
-    {
-        Console.WriteLine("BAI TAP 1");
-        Console.Write("nhap chi so cu: ");
-        decimal cscu = decimal.Parse(Console.ReadLine());
-        Console.Write("nhap chi so moi: ");
-        decimal csmoi = decimal.Parse(Console.ReadLine());
+    Pending = 1,
+    Processing = 2,
+    Shipped = 3,
+    Delivered = 4,
+    Cancelled= 5,
 
-        if (csmoi <= cscu)
+}
+enum CurrencyType1
+{
+    bike,
+    car
+}
+    
+
+
+class program
+{
+    static void EX01()
+    {
+        Console.Write("tuổi: ");
+        double tuoi = double.Parse(Console.ReadLine());
+        Console.Write("giờ chiếu: ");
+        double giochieu = double.Parse(Console.ReadLine());
+
+        decimal giave = 0;
+        if (tuoi > 60 || tuoi < 12)
         {
-            Console.WriteLine("chuong trinh khong hoat dong ");
+            giave = 50;
+        }
+        else
+        {
+            if (giochieu < 17)
+            {
+                giave = 80;
+            }
+            else
+            {
+                giave = 110;
+            }
+
+        }
+        Console.WriteLine($"Gia ve cua ban la: {giave}");
+    }
+    static void EX02()
+    {
+        Console.Write("nhập chức vụ(ADMIN, MANAGER, EMPLOYEE, GUEST): ");
+        string chucvu = Console.ReadLine();
+
+        if (chucvu == "ADMIN")
+        {
+            Console.WriteLine("Toàn quyền quản trị hệ thống.");
+        }
+        else if (chucvu == "MANAGER")
+        {
+            Console.WriteLine("Quyền quản lý nhân sự và xem báo cáo.");
+        }
+        else if (chucvu == "EMPLOYEE")
+        {
+            Console.WriteLine("Quyền tạo và chỉnh sửa hồ sơ cá nhân.");
+        }
+        else
+        {
+            Console.WriteLine("Chỉ có quyền xem thông tin công khai.");
+        }    
+    }
+    static void EX03()
+    {
+        Console.Write("nhap so du tai khoan: ");
+        decimal sodu = decimal.Parse(Console.ReadLine());
+        Console.Write("so tien muon rut: ");
+        decimal sotien = decimal.Parse(Console.ReadLine());
+
+        if (sotien <= 0)
+        {
+            Console.WriteLine("Lỗi, Số tiền rút phải lớn hơn 0");
+           
+
+        }
+        else if (sotien % 50 != 0)
+        {
+            Console.WriteLine("Lỗi, Số tiền rút phải là bội số của 50,000 VNĐ");
+           
+        }
+        else if (sotien > sodu)
+        {
+            Console.WriteLine("Lỗi, Số tiền rút không vượt quá số dư hiện tại");
+           
+        }
+        else if (sotien > 5000)
+        {
+            Console.WriteLine("Lỗi,  Hạn mức rút tối đa 5,000,000 VNĐ / lần.");
+            
+        }
+        else
+        {
+            Console.WriteLine($"giao dịch thành công. số dư còn lại {sodu - sotien}");
+        }
+            
+
+    }
+    static void EX04()
+    {
+        Console.Write("nhập số(0 - 4): ");
+        int so = int.Parse(Console.ReadLine());
+            
+
+        switch (so)
+        {
+            case 0:
+                Console.WriteLine("[Tổng đài]: quay lai menu chinh");
+                break;
+            case 1:
+                Console.WriteLine("[Tổng đài]: Gặp tổng đài viên tư vấn thẻ");
+                break;
+            case 2:
+                Console.WriteLine("[Tổng đài]: Tra cứu số dư tài khoản");
+                break;
+            case 3:
+                Console.WriteLine("[Tổng đài]: Báo khóa thẻ khẩn cấp");
+                break ;
+            case 4:
+                Console.WriteLine("[Tổng đài]: Tra cứu tỷ giá ngoại tệ");
+                break;
+            default:
+                    Console.WriteLine("Lựa chọn không hợp lệ. Vui lòng thử lại!");
+                break;
+
+        }
+
+    }
+    static void EX05()
+    {
+        Console.Write("nhap so km: ");
+        double km = double.Parse(Console.ReadLine());
+
+
+        double sotien = 0;
+        if (km < 0)
+        {
+            Console.WriteLine("khong hop le");
             return;
         }
 
-        decimal sokwh = csmoi - cscu;
-        decimal tiendien = 0;
-
-        if (sokwh <= 50)
+        if (km > 0 && km <= 1)
         {
-            tiendien = sokwh * 1.806m;
+            sotien = 15000;
         }
-        else if (sokwh > 50 && sokwh <= 100)
+        else if (km >= 2 && km <= 10)
         {
-            tiendien = sokwh * 1.866m;
-        }
-        else if (sokwh > 100 && sokwh <= 200)
-        {
-            tiendien = sokwh * 2.167m;
-        }
-        else if (sokwh > 200 && sokwh <= 300)
-        {
-            tiendien = sokwh * 2.729m;
+            sotien = 15000 + (km -1) *12000;
         }
         else
         {
-            tiendien = sokwh * 3.050m;
+            sotien = 15000 + 9 * 12000 + (km - 10) * 10000;
         }
-        decimal thuevat = tiendien * 0.08m;
-        decimal tongtien = tiendien + thuevat;
-        Console.WriteLine("----ket qua----");
-        Console.WriteLine("so dien tieu thu = " + sokwh.ToString("F1"));
-        Console.WriteLine("tien dien chua thue = " + tiendien.ToString("F1"));
-        Console.WriteLine("thue vat = " + thuevat.ToString("F1"));
-        Console.WriteLine("tong thanh toan = " + tongtien.ToString("F1"));
+        Console.WriteLine($"tong tien truoc giam: {sotien:N0}");
 
-
+        double thanhtien = sotien;
+        ;
+        if (km > 30)
+        {
+            double khuyenmai = sotien * 0.1;
+            thanhtien = sotien - khuyenmai;
+            Console.WriteLine($"khuyen mai( 10% ): -{ khuyenmai:N0}  ");
+        }
     }
-    static void ex02()
+    static void EX06()
     {
-        Console.WriteLine("BAI TAP 2");
-        Console.Write("nhap chieu cao: ");
-        double chieucao = double.Parse(Console.ReadLine());
-        Console.Write("nhap can nang: ");
-        double cannang = double.Parse(Console.ReadLine());
-        double BMI = cannang / Math.Pow(chieucao,2) ;
-        string phanloai;
-
-        if (BMI <= 18.5)
-        {
-            phanloai = "gay (thieu can)";
-        }
-
-        else if (18.5 <= BMI && BMI < 25)
-        {
-            phanloai = "binhthuong (ly tuong)";
-        }
-        else if (23.0 <= BMI && BMI < 25.0)
-        {
-            phanloai = "thuacan (tien beo phi)";
-        }
-        else
-        {
-            phanloai = "beo phi";
-        }
-        double toithieu = 18.5 * Math.Pow(chieucao, 2);
-        double toida = 22.9 * Math.Pow(chieucao, 2);
-        Console.WriteLine("----ket qua----");
-        Console.WriteLine("chi so BMI cua ban: " + Math.Round(BMI,2)); 
-        Console.WriteLine("phan loai suc khoe: " + phanloai);
-        Console.WriteLine("khuyen dung: " +"can nang ly tuong cua ban nen tu "+Math.Round(toithieu,2) +" den "+Math.Round(toida,2) );
-    }
-    enum CurrentcyType
-    {
-        USD,
-        EUR,
-        PJY,
-        GBP
-    }
-    static void ex03()
-    {
-        Console.WriteLine("BAI TAP 3");
-        const decimal tygiaUSD = 25.400m;
-        const decimal tygiaEUR = 27.200m;
-        const decimal tygiaJPY = 165m;
-        const decimal tygiaGBP = 32.100m;
-
-        Console.Write("nhap so tien can doi: ");
-        decimal sotien = decimal.Parse(Console.ReadLine());
-
-        Console.Write("chon ngoai te( 1 - USD 2 -EUR 3 - JPY 4 - GBP): ");
-        int luachon = int .Parse(Console.ReadLine());
-        decimal phidichvu = sotien * 0.005m;
-        decimal tienthat = sotien - phidichvu;
-
-        decimal tygia = 0;
-        string kyhieu = "";
-
-        if (luachon == 1)
-        {
-            tygia = 25.400m;
-            kyhieu = "USD";
-        }
-        else if (luachon == 2)
-        {
-            tygia = 27.200m;
-            kyhieu = "EUR";
-        }
-        else if (luachon == 3)
-        {
-            tygia = 165m;
-            kyhieu = "JPY";
-
-        }
-        else if (luachon == 4)
-        {
-            tygia = 32.100m;
-            kyhieu = "GBP";
-        }
-        else
+        Console.Write("nhập trạng thái đơn hàng(1: Pending, 2: Processing, 3: Shipped, 4: Delivered, 5: Cancelled): ");
+        int nhap =int.Parse(Console.ReadLine());
+        if (!Enum.IsDefined(typeof(CurrencyType), nhap))
         {
             Console.WriteLine("lua chon khong hop le");
             return;
         }
-
-        decimal sotienquydoi = tienthat * 1 / tygia;
-        Console.WriteLine("ket qua");
-        Console.WriteLine("phi dich vu (0.5%): "+ phidichvu.ToString("F1"));
-        Console.WriteLine("so tien VN tinh doi: "+ tienthat.ToString("F1"));
-        Console.WriteLine("so tien " + kyhieu + " nhan duoc :" + sotienquydoi.ToString("F1"));
-
-    }
-    static void ex04()
-    {
-        Console.Write("BÀI TẬP 4");
-        Console.Write("nhap ngay sinh (dd/MM/yyyy): ");
-        string chuoingaysinh = Console.ReadLine();
-        DateTime ngaysinh;
-        bool hople = DateTime.TryParseExact(
-            chuoingaysinh,
-            "dd,MM,yyyy",
-            CultureInfo.InvariantCulture,
-            DateTimeStyles.None,
-            out ngaysinh
-        );
-        if (!hople)
+        CurrencyType luachon = (CurrencyType)nhap;
+        switch (luachon)
         {
-            Console.WriteLine("ngay sinh khong dung dinh dang");
+            case CurrencyType.Pending:
+                Console.WriteLine("[Trạng thái]: Chờ xác nhận thanh toán.");
+                break;
+            case CurrencyType.Processing:
+                Console.WriteLine("[Trạng thái]: Đang đóng gói và bàn giao đơn vị vận chuyển.");
+                break;
+            case CurrencyType.Shipped:
+                Console.WriteLine("[Trạng thái]: Đơn hàng đang trên đường giao đến bạn.");
+                break;
+            case CurrencyType.Delivered:
+                Console.WriteLine("[Trạng thái]: Đơn hàng đã hoàn thành. Cảm ơn bạn!");
+                break;
+            case CurrencyType.Cancelled:
+                Console.WriteLine("[Trạng thái]: Đơn hàng đã hủy. Xuất phiếu hoàn tiền.");
+                break;
+                
+        }
+    }
+    static void EX07()
+    {
+        Console.Write("nhập chiều cao: ");
+        double chieucao = double.Parse(Console.ReadLine());
+        Console.Write("nhập cân nặng: ");
+        double cannang = double.Parse(Console.ReadLine());
+        double BMI = cannang / Math.Pow(chieucao, 2);
+        Console.WriteLine($"BMI: {BMI:F2}");
+
+        if (BMI < 18.5)
+        {
+            Console.WriteLine("Thầy gầy - Nên bổ sung dinh dưỡng.");
+        }
+        else if (18.5 <= BMI && BMI < 25)
+        {
+            Console.WriteLine("Cân đối - Tiếp tục duy trì..");
+        }
+        else if (25 <= BMI && BMI < 30)
+        {
+            Console.WriteLine("Thừa cân - Nên tăng cường luyện tập.");
+        }
+        else if(BMI >= 30)
+        {
+            Console.WriteLine("Béo phì - Cần sự tư vấn từ bác sĩ.");
+        }    
+    }
+    static void EX08()
+    {
+        Console.WriteLine("nhập loại xe (BIKE hoặc CAR): ");
+        string xe = Console.ReadLine().Trim().ToUpper();
+
+        Console.WriteLine("nhập thời gian gửi (1-Ban ngày, 2-Ban đêm): ");
+        int time = int.Parse(Console.ReadLine());
+
+        if (xe != "BIKE" && xe != "CAR")
+        {
+            Console.WriteLine("nhap sai loai xe");
             return;
         }
-        DateTime homnay = DateTime.Now.Date;
-        int tuoi = homnay.Year - ngaysinh.Year;
-        if ( homnay.Month < ngaysinh.Month || homnay.Month == ngaysinh.Month&&homnay.Day<ngaysinh.Day )
-        {
-            tuoi--;
-        }
-        TimeSpan songaydasong = homnay - ngaysinh;
-        DateTime sinhnhatieptheo = new DateTime(homnay.Year,ngaysinh.Month,ngaysinh.Day);
-        if(homnay > sinhnhatieptheo)
-        {
-            sinhnhatieptheo = sinhnhatieptheo.AddYears(1);
 
+        if (time != 1 && time != 2)
+        {
+            Console.WriteLine("nhap sai thoi gian");
+            return;
         }
-        TimeSpan sonngayconlai = sinhnhatieptheo - homnay;
 
-        Console.WriteLine("ket qua");
-        Console.WriteLine("so tuoi hien tai: "+ tuoi);
-        Console.WriteLine( "ban da song tong cong: "+songaydasong+" ngay");
+        int phi = 0;
+        string tenXe = "";
+
+        switch (xe)
+        {
+            case "BIKE":
+                tenXe = "xe máy";
+                phi = (time == 1) ? 5000 : 10000;
+                break;
+
+            case "CAR":
+                tenXe = "Ô tô";
+                phi = (time == 1) ? 30000 : 60000;
+                break;
+        }
+
+        string banGi = (time == 1) ? "Ban ngày" : "Ban đêm";
+        Console.WriteLine($"Phí gửi xe {tenXe} ({banGi}): {phi:N0} VNĐ");
     }
-    
-    static void ex05()
+    static void EX09()
     {
-        Console.WriteLine("BÀI TẬP 5");
-        Console.Write("csharp(4 TC): ");
-        double tccsharp = double .Parse(Console.ReadLine());
-        int csharp = 4;
-        Console.Write("toan(3 TC): ");
-        double toan = double .Parse(Console.ReadLine());
-        int toanrr = 3;  
-        Console.Write("tienganh(2 TC): ");
-        double tienganh = double .Parse(Console.ReadLine());
-        int ta = 2;
-        
-        double tongtc = csharp + toanrr + tienganh;
-        double diemtb = (tccsharp + toan + tienganh)/3;
-        double diemtbts = (tccsharp*csharp + toan* toanrr + tienganh*ta) / tongtc;
-        char diemchu =' ';
-        double thang4=0;
-        string xeploai = "";
+        Console.WriteLine("nhập điểm trung bình tích lũy (GPA, hệ 4.0): ");
+        double gpa = double.Parse(Console.ReadLine());
 
-        if (diemtbts >= 8.5)
+        Console.WriteLine("nhập điểm rèn luyện (DRL, hệ 100): ");
+        double drl = double.Parse(Console.ReadLine());
+
+        if (gpa >= 3.6 && drl >= 90)
         {
-            diemchu = 'A';
-            thang4 = 4;
-            xeploai = "xuatxac/gioi";
+            Console.WriteLine("Kết quả: Học bổng Xuất sắc (Mức 100%)");
         }
-        else if (diemtbts >= 7 && diemtbts <= 8.4)
+        else if (gpa >= 3.2 && drl >= 80)
         {
-            diemchu = 'B';
-            thang4 = 3;
-            xeploai = "kha";
+            string lyDo = "";
+
+            if (gpa < 3.6)
+                lyDo = $"Do GPA < 3.6";
+            else if (drl < 90)
+                lyDo = $"Do DRL < 90";
+
+            Console.WriteLine($"Kết quả: Học bổng Khá/Giỏi (Mức 50%) ({lyDo})");
         }
-        else if (diemtbts >= 5.5 && diemtbts <= 6.9)
+        else
         {
-            diemchu = 'C';
-            thang4 = 2;
-            xeploai = "tb";
+            Console.WriteLine("Kết quả: Không đạt học bổng");
         }
-        else if (diemtbts >= 4.0 && diemtbts <= 5.4)
-        {
-            diemchu = 'D';
-            thang4 = 1;
-            xeploai = "yeu";
-        }
-        else if (diemtbts <4)
-        {
-            diemchu = 'F';
-            thang4 = 0;
-            xeploai = "kem";
-        
-        }
-
-        Console.WriteLine($"Diem TB Thang 10: {diemtb:F2}");
-        Console.WriteLine($"Diem Chu Quy Doi: {diemchu}");
-        Console.WriteLine($"Diem GPA Thang 4: {thang4:F2}");
-        Console.WriteLine($"Xep Loai Hoc Luc: {xeploai}");
-
-
-
-
-
     }
-          
+    static void EX10()
+    {
+        Console.WriteLine("nhập số tiền (VNĐ): ");
+        double soTien = double.Parse(Console.ReadLine());
 
+        Console.WriteLine("nhập mã ngoại tệ (USD, EUR, JPY): ");
+        string maNgoaiTe = Console.ReadLine().Trim().ToUpper();
 
+        double tyGia = 0;
 
+        switch (maNgoaiTe)
+        {
+            case "USD":
+                tyGia = 25400;
+                break;
 
+            case "EUR":
+                tyGia = 27200;
+                break;
 
+            case "JPY":
+                tyGia = 165;
+                break;
 
+            default:
+                Console.WriteLine("Mã ngoại tệ không hợp lệ");
+                return;
+        }
 
-
+        double ketQua = soTien / tyGia;
+        Console.WriteLine($"Số tiền sau quy đổi: {ketQua:N2} {maNgoaiTe}");
+    }
     static void Main()
     {
-        ex01();
-        ex02();
-        ex03();
-        ex04();
-        ex05();
+        EX01();
+        EX02();
+        EX03();
+        EX04();
+        EX05();
+        EX06();
+        EX07();
+        EX08();
+        EX09();
+        EX10();
     }
+
+
 }
-        
+    
+  
    
